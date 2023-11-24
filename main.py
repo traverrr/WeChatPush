@@ -48,16 +48,18 @@ def get_weather(province, city):
     return weather, temp, tempn
 
 
-# 获取今天是第几周，返回字符串
 def get_Today_Week():
-    y = config.year
-    m = config.month
-    d = config.day
-    startWeek = datetime(y, m, d)
-    today = datetime.today()
-    d_days = today - startWeek
-    trueWeek = (d_days.days // 7) + 1
-    return str(trueWeek)
+    try:
+        y = int(config.year)
+        m = int(config.month)
+        d = int(config.day)
+        startWeek = datetime(y, m, d)
+        today = datetime.today()
+        d_days = today - startWeek
+        trueWeek = (d_days.days // 7) + 1
+        return str(trueWeek)
+    except ValueError:
+        return "Invalid date"
 
 
 # 获取本周课程
@@ -66,21 +68,23 @@ def get_Week_Classes(w):
     return week_Class
 
 
+
 # 获取今日课程
 def get_Today_Class():
     year = localtime().tm_year
     month = localtime().tm_mon
     day = localtime().tm_mday
-    today = datetime.date(datetime(year=year, month=month, day=day))
-    todayClasses = get_Week_Classes(None)[today.weekday()]
-    return todayClasses
+    today = datetime.date(datetime(year=year, month=month, day=day))  
+    week_classes = get_Week_Classes(None)  # 获取本周课程
+    print("Week classes:", week_classes)  # 打印本周课程
+    today_classes = week_classes[today.weekday()]  # 尝试获取今天的课程
+    return today_classes
 
 
 # 获取指定星期几的课程
 def get_Class(day):
     theClasses = get_Week_Classes(None)[day]
     return theClasses
-
 
 # # 发送本周所有课程，周一的时候发
 # def send_Week_Classes(to_user, access_token, week):
