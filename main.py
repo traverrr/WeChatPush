@@ -62,11 +62,7 @@ def get_Today_Week():
 
 # 获取本周课程
 def get_Week_Classes(w):
-    if w is not None:
-        week_Class = config.classes.get(w)
-    else:
-        week = get_Today_Week()
-        week_Class = config.classes.get(week)
+    week_Class = config.classes.get("1")   
     return week_Class
 
 
